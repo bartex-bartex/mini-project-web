@@ -1,36 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-
-// class TimeSlot {
-//   constructor(date, time, isReserved, isCancelled) {
-//     this.date = date
-//     this.time = time
-//     this.isReserved = isReserved
-//     this.isCancelled = isCancelled
-//   }
-// }
-
-function TimeSlotComponent({ timeSlot }) {
-
-  let color;
-  if (timeSlot.isCancelled) {
-    color = 'red'
-  } else if (timeSlot.date < new Date()) {
-    color = 'gray'
-  } else {
-    color = 'green'
-  }
-
-  const style = {
-    width: `100px`,
-    height: `100px`,
-    backgroundColor: color
-  }
-
-  return <div style={style}></div>
-}
 
 function getWeekDates() {
   const today = new Date();
@@ -63,81 +34,83 @@ function getDayTimes() {
   return dayTimes
 }
 
+function getCalendarData(timeSlots, weekDates, dayTimes) {
+  const calendar1 = new Map();
+
+  for (let i = 0; i < 7; i++) {
+    const dayMap = new Map();
+
+    for (let j = 0; j < 48; j++) {
+      const res = timeSlots.filter(timeSlot => timeSlot.date === weekDates[i] && timeSlot.time === dayTimes[j]);
+
+      if (res.length > 0) {
+        dayMap.set(dayTimes[j], res[0]);
+      } else {
+        dayMap.set(dayTimes[j], {});
+      }
+    }
+
+    calendar1.set(weekDates[i], dayMap);
+  }
+
+  return calendar1;
+}
+
+function TableCell({key, timeSlot, date, time }) {
+  const getBackgroundColor = () => {
+    let color;
+
+    if (timeSlot.isCancelled) {
+      color = 'red';
+    } else if (new Date(timeSlot.date) < new Date()) {
+      color = 'gray';
+    } else if (Object.keys(timeSlot).length > 0) {
+      color = 'green';
+    }
+
+    return color;
+  };
+
+  return (
+    <td key={key} style={{ backgroundColor: getBackgroundColor() }}>
+      {timeSlot.date || '--'}
+    </td>
+  );
+}
+
+function TimeRow ({ time, weekDates, calendar }) {
+  return (
+    <tr>
+      {weekDates.map(date => {
+        const timeSlot = calendar.get(date)?.get(time) || {};
+        return <TableCell key={date} timeSlot={timeSlot} date={date} time={time} />;
+      })}
+    </tr>
+  );
+}
+
 function Calendar({ timeSlots }) {
 
   const weekDates = getWeekDates() // 2025-01-09
   const dayTimes = getDayTimes()   // 02:00
 
-  const [calendar, setCalendar] = useState(() => {
-    const calendar1 = new Map();
-
-    for (let i = 0; i < 7; i++) {
-      const dayMap = new Map();
-
-      for (let j = 0; j < 48; j++) {
-        const res = timeSlots.filter(timeSlot => timeSlot.date === weekDates[i] && timeSlot.time === dayTimes[j]);
-
-        if (res.length > 0) {
-          dayMap.set(dayTimes[j], res[0]);
-        } else {
-          dayMap.set(dayTimes[j], {});
-        }
-      }
-
-      calendar1.set(weekDates[i], dayMap);
-    }
-
-    return calendar1;
-  });
-
+  const calendar = useMemo(() => getCalendarData(timeSlots, weekDates, dayTimes), [timeSlots, weekDates, dayTimes]);
 
   return (
     <div className='container'>
       <table>
         <thead>
           <tr>
-            <th>Monday</th>
-            <th>Tuesday</th>
-            <th>Wednesday</th>
-            <th>Thursday</th>
-            <th>Friday</th>
-            <th>Saturday</th>
-            <th>Sunday</th>
+            {weekDates.map((date, idx) => (
+              <th key={idx}>{date}</th>
+            ))}
           </tr>
         </thead>
         <tbody>
           {
-            dayTimes.map((time, index) => {
-              return (
-                <tr key={index.toString()}>
-                  {weekDates.map((date, _) => {
-                    return (
-                      <td
-                        style={{
-                          backgroundColor: (() => {
-                            const timeSlot = calendar.get(date).get(time);  // Get the timeSlot object
-                            let color;
-                    
-                            // Apply logic to set color based on timeSlot properties
-                            if (timeSlot.isCancelled) {
-                              color = 'red';
-                            } else if (new Date(timeSlot.date) < new Date()) {
-                              color = 'gray';  // If the time is in the past, set gray
-                            } else if (Object.keys(timeSlot).length > 0) {
-                              color = 'green';  // Otherwise, set green for future times
-                            }
-                    
-                            return color;  // Return the chosen color
-                          })()
-                        }}
-                      >
-                        {calendar.get(date).get(time).date}
-                      </td>
-                      );
-                    })}
-                </tr>
-              )
-            })
+            dayTimes.map((time, index) => (
+              <TimeRow key={time} time={time} weekDates={weekDates} calendar={calendar} />
+            ))
           }
         </tbody>
       </table>
@@ -167,7 +140,6 @@ function App() {
 
   return (
     <Calendar timeSlots={timeSlots} />
-    // <TimeSlotComponent timeSlot={timeSlots[5]} />
   )
 }
 
