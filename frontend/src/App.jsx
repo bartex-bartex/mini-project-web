@@ -56,7 +56,27 @@ function getCalendarData(timeSlots, weekDates, dayTimes) {
   return calendar1;
 }
 
-function TableCell({key, timeSlot, date, time }) {
+function Tooltip({ content, position }) {
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        top: position.top,
+        left: position.left,
+        backgroundColor: 'black',
+        color: 'white',
+        padding: '5px',
+        borderRadius: '4px',
+        pointerEvents: 'none', // Ensure the tooltip doesn't interfere with mouse events
+        zIndex: 1000,
+      }}
+    >
+      {content}
+    </div>
+  );
+}
+
+function TableCell({ key, timeSlot, date, time }) {
   const getBackgroundColor = () => {
     let color;
 
@@ -71,16 +91,31 @@ function TableCell({key, timeSlot, date, time }) {
     return color;
   };
 
+  function onHover(event) {
+
+  }
+
+  function onClick(event) {
+    // TODO: redirection to the reservation page
+    alert('clicked')
+  }
+
   return (
-    <td key={key} style={{ backgroundColor: getBackgroundColor() }}>
-      {timeSlot.date || '--'}
-    </td>
+    <>
+      <td className='tooltip-trigger' key={key} style={{ backgroundColor: getBackgroundColor() }} onClick={onClick}>
+        {timeSlot.date || '--'}
+        <div className='tooltip'>
+          <p>Time: {time}</p>
+        </div>
+      </td>
+    </>
   );
 }
 
-function TimeRow ({ time, weekDates, calendar }) {
+function TimeRow({ time, weekDates, calendar }) {
   return (
     <tr>
+      <td>{time}</td>
       {weekDates.map(date => {
         const timeSlot = calendar.get(date)?.get(time) || {};
         return <TableCell key={date} timeSlot={timeSlot} date={date} time={time} />;
@@ -101,6 +136,7 @@ function Calendar({ timeSlots }) {
       <table>
         <thead>
           <tr>
+            <th></th>
             {weekDates.map((date, idx) => (
               <th key={idx}>{date}</th>
             ))}
