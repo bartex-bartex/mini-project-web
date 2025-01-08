@@ -3,8 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-function getWeekDates() {
-  const today = new Date();
+function getWeekDates(today) {
   const day = today.getDay()
   const date = today.getDate() - day
 
@@ -56,7 +55,7 @@ function getCalendarData(timeSlots, weekDates, dayTimes) {
   return calendar1;
 }
 
-function TableCell({ key, timeSlot, date, time }) {
+function TableCell({ timeSlot, time }) {
   const getBackgroundColor = () => {
     let color;
 
@@ -71,10 +70,6 @@ function TableCell({ key, timeSlot, date, time }) {
     return color;
   };
 
-  function onHover(event) {
-
-  }
-
   function onClick(event) {
     // TODO: redirection to the reservation page
     alert('clicked')
@@ -82,7 +77,7 @@ function TableCell({ key, timeSlot, date, time }) {
 
   return (
     <>
-      <td className='tooltip-trigger' key={key} style={{ backgroundColor: getBackgroundColor() }} onClick={onClick}>
+      <td className='tooltip-trigger' style={{ backgroundColor: getBackgroundColor() }} onClick={onClick}>
         {timeSlot.date || '--'}
         <div className='tooltip'>
           <p>Time: {time}</p>
@@ -98,7 +93,7 @@ function TimeRow({ time, weekDates, calendar }) {
       <td>{time}</td>
       {weekDates.map(date => {
         const timeSlot = calendar.get(date)?.get(time) || {};
-        return <TableCell key={date} timeSlot={timeSlot} date={date} time={time} />;
+        return <TableCell timeSlot={timeSlot} time={time} />;
       })}
     </tr>
   );
@@ -106,31 +101,48 @@ function TimeRow({ time, weekDates, calendar }) {
 
 function Calendar({ timeSlots }) {
 
-  const weekDates = getWeekDates() // 2025-01-09
+  // let weekDates = getWeekDates(new Date()) // 2025-01-09
   const dayTimes = getDayTimes()   // 02:00
-
+  const [currDate, setCurrDate] = useState(new Date())
+  const [weekDates, setWeekDates] = useState(getWeekDates(new Date()))
   const calendar = useMemo(() => getCalendarData(timeSlots, weekDates, dayTimes), [timeSlots, weekDates, dayTimes]);
 
+  function prev(event){
+    setCurrDate(new Date(currDate.setDate(currDate.getDate() - 7)))
+    setWeekDates(getWeekDates(currDate))
+  }
+
+  function next(event){
+    setCurrDate(new Date(currDate.setDate(currDate.getDate() + 7)))
+    setWeekDates(getWeekDates(currDate))
+  }
+
   return (
-    <div className='container'>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            {weekDates.map((date, idx) => (
-              <th key={idx}>{date}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {
-            dayTimes.map((time, index) => (
-              <TimeRow key={time} time={time} weekDates={weekDates} calendar={calendar} />
-            ))
-          }
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div className='nav'>
+        <button onClick={prev}>Prev</button>
+        <button onClick={next}>Next</button>
+      </div>
+      <div className='container'>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              {weekDates.map((date, idx) => (
+                <th key={idx}>{date}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {
+              dayTimes.map((time, index) => (
+                <TimeRow key={time} time={time} weekDates={weekDates} calendar={calendar} />
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </>
   )
 }
 
