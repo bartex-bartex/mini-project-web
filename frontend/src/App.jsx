@@ -56,26 +56,6 @@ function getCalendarData(timeSlots, weekDates, dayTimes) {
   return calendar1;
 }
 
-function Tooltip({ content, position }) {
-  return (
-    <div
-      style={{
-        position: 'absolute',
-        top: position.top,
-        left: position.left,
-        backgroundColor: 'black',
-        color: 'white',
-        padding: '5px',
-        borderRadius: '4px',
-        pointerEvents: 'none', // Ensure the tooltip doesn't interfere with mouse events
-        zIndex: 1000,
-      }}
-    >
-      {content}
-    </div>
-  );
-}
-
 function TableCell({ key, timeSlot, date, time }) {
   const getBackgroundColor = () => {
     let color;
