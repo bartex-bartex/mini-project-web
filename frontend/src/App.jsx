@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import HeaderBar from './components/HeaderBar';
 import DoctorList from './pages/DoctorList';
+import ManageSchedule from './pages/ManageSchedule';
 import { UserProvider } from './UserContext';
 import './App.css'
 
@@ -34,6 +35,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard />}/>
           <Route path="/calendar" element={<Calendar timeSlots={timeSlots} />} />
+          <Route path="/manageschedule" element={<ManageSchedule />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/doctorlist" element={<DoctorList />} />
