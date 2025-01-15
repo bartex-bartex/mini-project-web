@@ -4,8 +4,8 @@ import { useUser } from '../UserContext';
 import './Register.css';
 
 function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [localUsername, setLocalUsername] = useState('');
+  const [localPassword, setLocalPassword] = useState('');
   const navigate = useNavigate();
   const { login } = useUser();
 
@@ -16,16 +16,16 @@ function Login() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username: localUsername, password: localPassword }),
     });
 
     if (response.ok) {
       const data = await response.json();
-      login(data.token);
+      login(data.token, localUsername);
       navigate('/');
     } else {
       const errorData = await response.json();
-      console.error('Login failed:', errorData);
+      alert('Login failed:', errorData);
     }
   };
 
@@ -38,8 +38,8 @@ function Login() {
           <input
             type="text"
             id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={localUsername}
+            onChange={(e) => setLocalUsername(e.target.value)}
             required
           />
         </div>
@@ -48,8 +48,8 @@ function Login() {
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={localPassword}
+            onChange={(e) => setLocalPassword(e.target.value)}
             required
           />
         </div>

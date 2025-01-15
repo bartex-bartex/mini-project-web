@@ -4,7 +4,7 @@ import { useUser } from '../UserContext';
 import './HeaderBar.css';
 
 function HeaderBar() {
-  const { token, logout } = useUser();
+  const { token, username, logout } = useUser();
 
   return (
     <header className="header-bar">
@@ -14,7 +14,7 @@ function HeaderBar() {
       <div className="right-section">
         {token ? (
           <>
-            <span className="header-username">Logged In</span>
+            <span className="header-username">{username}</span>
             <button className="header-button" onClick={logout}>Logout</button>
           </>
         ) : (
