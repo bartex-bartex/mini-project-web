@@ -4,6 +4,7 @@ import Calendar from './components/Calendar'
 import Dashboard from './pages/dashboard';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import HeaderBar from './components/HeaderBar';
 import { UserProvider } from './UserContext';
 import './App.css'
 
@@ -28,6 +29,7 @@ function App() {
   return (
     <UserProvider>
       <Router>
+        <HeaderBar />
         <Routes>
           <Route path="/" element={<Dashboard />}/>
           <Route path="/calendar" element={<Calendar timeSlots={timeSlots} />} />

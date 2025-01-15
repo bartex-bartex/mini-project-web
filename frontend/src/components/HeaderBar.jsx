@@ -9,6 +9,7 @@ function HeaderBar() {
   return (
     <header className="header-bar">
       <div className="left-section">
+        <Link to="/" className="header-button">Strona Główna</Link>
         <button className="header-button">Lista lekarzy</button>
       </div>
       <div className="right-section">
