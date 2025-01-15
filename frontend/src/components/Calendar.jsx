@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { getWeekDates, getDayTimes, getCalendarData } from './../helpers/dateHelpers'
 import TimeRow from './TimeRow'
+import './Calendar.css'
 
 function Calendar({ timeSlots }) {
 
