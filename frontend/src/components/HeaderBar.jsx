@@ -10,7 +10,7 @@ function HeaderBar() {
     <header className="header-bar">
       <div className="left-section">
         <Link to="/" className="header-button">Strona Główna</Link>
-        <button className="header-button">Lista lekarzy</button>
+        <Link to="/doctorlist" className="header-button">Lista lekarzy</Link>
       </div>
       <div className="right-section">
         {token ? (

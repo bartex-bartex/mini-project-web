@@ -4,6 +4,13 @@ const express = require('express');
 const cors = require('cors');
 const sequelize = require('./database');
 const authRoutes = require('./routes/authRoutes');
+const User = require('./models/userModel');
+const Schedule = require('./models/scheduleModel');
+const Appointment = require('./models/appointmentModel');
+const ShoppingCart = require('./models/shoppingCartModel');
+const ShoppingCartItem = require('./models/shoppingCartItemModel');
+const Chat = require('./models/chatModel');
+const ChatMessage = require('./models/chatMessageModel');
 
 const app = express();
 
@@ -102,11 +109,11 @@ timeSlots = [
   ]
   
 
-const corsOptions = {
-    origin: 'http://localhost:5174',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-}
+// const corsOptions = {
+//     origin: 'http://localhost:5174',
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+// }
 
 app.use(cors());
 app.use(express.json());
@@ -116,6 +123,8 @@ app.use('/api/auth', authRoutes);
 app.get('/api/timeSlots', (req, res) => {
     res.json(timeSlots);
 });
+
+app.get('/api/doctors', )
 
 app.listen(3001, () => {
     console.log('Server is listening on port 3001');

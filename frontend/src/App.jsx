@@ -5,6 +5,7 @@ import Dashboard from './pages/dashboard';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import HeaderBar from './components/HeaderBar';
+import DoctorList from './pages/DoctorList';
 import { UserProvider } from './UserContext';
 import './App.css'
 
@@ -35,6 +36,7 @@ function App() {
           <Route path="/calendar" element={<Calendar timeSlots={timeSlots} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/doctorlist" element={<DoctorList />} />
         </Routes>
       </Router>
     </UserProvider>

@@ -1,32 +1,24 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database');
+const User = require('./userModel');
 
-const User = sequelize.define('User', {
+const Schedule = sequelize.define('Schedule', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUID,
     primaryKey: true,
   },
-  username: {
-    type: DataTypes.STRING,
+  doctorId: {
+    type: DataTypes.UUID,
     allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  role: {
-    type: DataTypes.ENUM('admin', 'doctor', 'patient'),
-    allowNull: false,
+    references: {
+      model: User,
+      key: 'id',
+    },
   },
   status: {
-    type: DataTypes.ENUM('active', 'banned'),
-    defaultValue: 'active',
+    type: DataTypes.ENUM('available', 'reserved', 'cancelled'),
+    defaultValue: 'available',
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -41,4 +33,4 @@ const User = sequelize.define('User', {
   updatedAt: 'updatedAt',
 });
 
-module.exports = User;
+module.exports = Schedule;
