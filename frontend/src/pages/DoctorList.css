@@ -1,0 +1,65 @@
+.doctor-list-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.doctor-list-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.doctor-list-container form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.doctor-list-container form input {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.doctor-list-container form button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.doctor-list-container form button:hover {
+  background-color: #0056b3;
+}
+
+.doctor-list-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.doctor-list-container li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.doctor-list-container li button {
+  padding: 5px 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.doctor-list-container li button:hover {
+  background-color: #c82333;
+}
