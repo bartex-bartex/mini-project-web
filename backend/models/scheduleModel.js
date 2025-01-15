@@ -16,10 +16,6 @@ const Schedule = sequelize.define('Schedule', {
       key: 'id',
     },
   },
-  status: {
-    type: DataTypes.ENUM('available', 'reserved', 'cancelled'),
-    defaultValue: 'available',
-  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,

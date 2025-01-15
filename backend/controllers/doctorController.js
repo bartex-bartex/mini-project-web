@@ -26,6 +26,14 @@ exports.addDoctor = async (req, res) => {
       createdAt: new Date(),
       updatedAt: new Date()
     });
+
+    await Schedule.create({
+      id: uuidv4(),
+      doctorId: doctor.id,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    });
+
     res.status(201).json(doctor);
   } catch (error) {
     res.status(400).json({ error: error.message });

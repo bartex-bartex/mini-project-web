@@ -23,7 +23,7 @@ function HeaderBar() {
         )}
         {role === 'doctor' && (
           <>
-            <Link to="/myschedule" className="header-button">Mój harmonogram</Link>
+            <Link to="/calendar" className="header-button">Mój harmonogram</Link>
             <Link to="/manageschedule" className="header-button">Zarządzanie harmonogramem</Link>
           </>
         )}

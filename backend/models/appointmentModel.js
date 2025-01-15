@@ -25,8 +25,12 @@ const Appointment = sequelize.define('Appointment', {
       key: 'id',
     },
   },
-  appointmentTime: {
-    type: DataTypes.DATE,
+  date: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  time: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
   slots: {
@@ -36,6 +40,10 @@ const Appointment = sequelize.define('Appointment', {
   visitType: {
     type: DataTypes.ENUM('initial', 'follow-up', 'chronic', 'prescription'),
     allowNull: false,
+  },
+  status: {
+    type: DataTypes.ENUM('available', 'reserved', 'cancelled'),
+    defaultValue: 'available',
   },
   patientName: {
     type: DataTypes.STRING,
