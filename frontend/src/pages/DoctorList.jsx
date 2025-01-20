@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useUser } from '../UserContext';
 import './DoctorList.css';
 
@@ -91,6 +92,9 @@ function DoctorList() {
             {doctor.username} ({doctor.email})
             {role === 'admin' && (
               <button onClick={() => handleRemoveDoctor(doctor.id)}>Remove</button>
+            )}
+            {role === 'pacjent' && (
+              <Link to={`/schedule/${doctor.id}`}>View Schedule</Link>
             )}
           </li>
         ))}

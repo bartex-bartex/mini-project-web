@@ -6,6 +6,11 @@ import './HeaderBar.css';
 function HeaderBar() {
   const { token, role, username, logout } = useUser();
 
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
   return (
     <header className="header-bar">
       <div className="left-section">
@@ -23,7 +28,7 @@ function HeaderBar() {
         )}
         {role === 'doctor' && (
           <>
-            <Link to="/calendar" className="header-button">Mój harmonogram</Link>
+            <Link to="/schedule/:doctorId" className="header-button">Mój harmonogram</Link>
             <Link to="/manageschedule" className="header-button">Zarządzanie harmonogramem</Link>
           </>
         )}
@@ -37,7 +42,7 @@ function HeaderBar() {
         {token ? (
           <>
             <span className="header-username">{username} - {role}</span>
-            <button className="header-button" onClick={logout}>Logout</button>
+            <button className="header-button" onClick={handleLogout}>Logout</button>
           </>
         ) : (
           <>

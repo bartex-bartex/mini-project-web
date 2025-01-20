@@ -5,6 +5,7 @@ const cors = require('cors');
 const sequelize = require('./database');
 const authRoutes = require('./routes/authRoutes');
 const doctorRoutes = require('./routes/doctorRoutes');
+const scheduleRoutes = require('./routes/scheduleRoutes');
 
 const User = require('./models/userModel');
 const Schedule = require('./models/scheduleModel');
@@ -121,7 +122,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
-app.use('/api/', doctorRoutes)
+app.use('/api/doctors', doctorRoutes)
+app.use('/api/schedule', scheduleRoutes);
 
 app.get('/api/timeSlots', (req, res) => {
     res.json(timeSlots);

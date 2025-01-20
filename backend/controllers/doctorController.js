@@ -1,4 +1,6 @@
 const User = require('../models/userModel');
+const Schedule = require('../models/scheduleModel');
+
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 
@@ -12,10 +14,15 @@ exports.getDoctors = async (req, res) => {
 };
 
 exports.addDoctor = async (req, res) => {
+  console.log('Add doctor function')
+
   const { username, email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
 
+  
   try {
+    console.log('Creating doctor')
+
     const doctor = await User.create({
       id: uuidv4(),
       username,
@@ -26,6 +33,8 @@ exports.addDoctor = async (req, res) => {
       createdAt: new Date(),
       updatedAt: new Date()
     });
+
+    console.log('created doctor')
 
     await Schedule.create({
       id: uuidv4(),

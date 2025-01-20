@@ -68,7 +68,7 @@ function ManageSchedule() {
 
   const handleSingleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:3001/api/availability/single', {
+    const response = await fetch('http://localhost:3001/api/schedule/single', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

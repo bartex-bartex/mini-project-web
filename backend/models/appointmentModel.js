@@ -19,7 +19,7 @@ const Appointment = sequelize.define('Appointment', {
   },
   patientId: {
     type: DataTypes.UUID,
-    allowNull: false,
+    allowNull: true,
     references: {
       model: User,
       key: 'id',
@@ -73,6 +73,12 @@ const Appointment = sequelize.define('Appointment', {
 }, {
   timestamps: true,
   updatedAt: 'updatedAt',
+  indexes: [
+    {
+      unique: true,
+      fields: ['date', 'time']
+    }
+  ]
 });
 
 module.exports = Appointment;
