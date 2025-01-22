@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../UserContext';
 import './HeaderBar.css';
 
 function HeaderBar() {
   const { token, role, username, logout } = useUser();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
@@ -28,7 +29,7 @@ function HeaderBar() {
         )}
         {role === 'doctor' && (
           <>
-            <Link to="/schedule/:doctorId" className="header-button">Mój harmonogram</Link>
+            <Link to="/schedule" className="header-button">Mój harmonogram</Link>
             <Link to="/manageschedule" className="header-button">Zarządzanie harmonogramem</Link>
           </>
         )}

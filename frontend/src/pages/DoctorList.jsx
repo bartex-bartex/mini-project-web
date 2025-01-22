@@ -94,7 +94,7 @@ function DoctorList() {
               <button onClick={() => handleRemoveDoctor(doctor.id)}>Remove</button>
             )}
             {role === 'pacjent' && (
-              <Link to={`/schedule/${doctor.id}`}>View Schedule</Link>
+              <Link to="/schedule" state={{doctorId: doctor.id, doctorName: doctor.username}}>View Schedule</Link>
             )}
           </li>
         ))}
