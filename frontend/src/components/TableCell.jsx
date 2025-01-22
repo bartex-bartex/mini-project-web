@@ -19,12 +19,15 @@ function TableCell({ timeSlot, time, date}) {
   const getBorderColor = () => {
     let color;
     const now = new Date();
-    const cell = new Date(date);
-    const cell2 = new Date()
-    cell2.setHours(time.split(':')[0], time.split(':')[1])
+    const cell_date = new Date(date);
+    const cell_time = new Date()
+    cell_time.setHours(time.split(':')[0], time.split(':')[1])
 
-    if (cell.getFullYear() === now.getFullYear() && cell.getMonth() === now.getMonth() && cell.getDate() === now.getDate()) {
-      if (cell2.getHours() === now.getHours() && now.getMinutes() - cell2.getMinutes() < 30) {
+    
+    if (cell_date.getFullYear() === now.getFullYear() && cell_date.getMonth() === now.getMonth() && cell_date.getDate() === now.getDate()) {
+      console.log(cell_date)
+      console.log(cell_time)
+      if (cell_time.getHours() === now.getHours() && ((now.getMinutes() >= 30 && cell_time.getMinutes() >= 30) || (now.getMinutes() < 30 && cell_time.getMinutes() < 30))) {
         color = 'lightblue';
       } else {
         color = 'yellow';

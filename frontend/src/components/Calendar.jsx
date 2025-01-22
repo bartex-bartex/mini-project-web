@@ -13,7 +13,6 @@ function Calendar({ doctorId }) {
     fetch(`http://localhost:3001/api/schedule/appointments/${doctorId}`)
       .then(response => response.json())
       .then(data => {
-        console.log("TETSTSTSETSTES")
         setAppointments(data)
       })
       .catch(error => {
