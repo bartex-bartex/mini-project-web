@@ -10,6 +10,7 @@ import { UserProvider } from './UserContext';
 import './App.css'
 import ManageSchedule from './pages/ManageSchedule';
 import Schedule from './pages/Schedule';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   // const [timeSlots, setTimeSlots] = useState([])
@@ -30,16 +31,30 @@ function App() {
   // }
 
   return (
-    <UserProvider>
+<UserProvider>
       <Router>
         <HeaderBar />
         <Routes>
-          <Route path="/" element={<Dashboard />}/>
-          <Route path="/schedule" element={<Schedule />} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/doctorlist" element={<DoctorList />} />
-          <Route path="/manageschedule" element={<ManageSchedule />} />
+          <Route
+            path="/schedule"
+            element={
+              <ProtectedRoute>
+                <Schedule />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/manageschedule"
+            element={
+              <ProtectedRoute requiredRole="doctor">
+                <ManageSchedule />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </Router>
     </UserProvider>

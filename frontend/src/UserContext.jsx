@@ -10,6 +10,7 @@ export const UserProvider = ({ children }) => {
   const [username, setUsername] = useState('');
   const [role, setRole] = useState('');
   const [id, setId] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -27,6 +28,7 @@ export const UserProvider = ({ children }) => {
     if (storedId) {
       setId(storedId);
     }
+    setLoading(false);
   }, []);
 
   const login = (tokenData, usernameData) => {
@@ -51,7 +53,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ token, username, role, id, login, logout }}>
+    <UserContext.Provider value={{ token, username, role, id, loading, login, logout }}>
       {children}
     </UserContext.Provider>
   );

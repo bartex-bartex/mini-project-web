@@ -177,7 +177,7 @@ function TableCell({ timeSlot, time, date}) {
   return (
     <>
       <td className='tooltip-trigger' style={{ backgroundColor: getBackgroundColor(), borderColor: getBorderColor()}} onClick={onClick}>
-        {timeSlot.date || '--'}
+        {timeSlot.time || '--'}
         <div className='tooltip'>
           {getTooltipText()}
         </div>
