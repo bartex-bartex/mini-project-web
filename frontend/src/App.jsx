@@ -12,22 +12,22 @@ import ManageSchedule from './pages/ManageSchedule';
 import Schedule from './pages/Schedule';
 
 function App() {
-  const [timeSlots, setTimeSlots] = useState([])
+  // const [timeSlots, setTimeSlots] = useState([])
 
-  useEffect(() => {
-    fetch("http://localhost:3001/api/timeSlots")
-      .then(response => response.json())
-      .then(data => {
-        setTimeSlots(data)
-      })
-      .catch(error => {
-        console.error('Can not fetch time slots: ', error)
-      })
-  }, [])
+  // useEffect(() => {
+  //   fetch("http://localhost:3001/api/timeSlots")
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       setTimeSlots(data)
+  //     })
+  //     .catch(error => {
+  //       console.error('Can not fetch time slots: ', error)
+  //     })
+  // }, [])
 
-  if (timeSlots.length === 0) {
-    return <div>Loading...</div>
-  }
+  // if (timeSlots.length === 0) {
+  //   return <div>Loading...</div>
+  // }
 
   return (
     <UserProvider>

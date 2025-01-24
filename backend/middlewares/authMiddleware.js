@@ -58,3 +58,23 @@ exports.checkDoctor = async (req, res, next) => {
     res.status(401).json({ message: 'Token is not valid' });
   }
 };
+
+exports.checkPatient = async (req, res, next) => {
+  const token = req.header('Authorization')?.replace('Bearer ', '');
+
+  if (!token) {
+    return res.status(401).json({ message: 'No token, authorization denied' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, secret);
+    const user = await User.findByPk(decoded.id);
+    if (user.role !== 'pacjent') {
+      return res.status(403).json({ message: 'Forbidden' });
+    }
+    req.user = user;
+    next();
+  } catch (error) {
+    res.status(401).json({ message: 'Token is not valid' });
+  }
+};

@@ -49,7 +49,8 @@ function ManageSchedule() {
 
   const handleCyclicSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:3001/api/availability/cyclic', {
+    console.log(JSON.stringify(cyclicAvailability));
+    const response = await fetch('http://localhost:3001/api/schedule/cyclic', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
