@@ -68,7 +68,7 @@ function TableCell({ timeSlot, time, date}) {
       } else if (role === 'pacjent') {
         color = 'red';
       }
-    } else if (timeSlot.isCancelled) {
+    } else if (timeSlot.status === 'cancelled') { 
       color = 'red';
     } else if (Object.keys(timeSlot).length > 0) {
       color = 'green';

@@ -209,3 +209,33 @@ exports.addRangeAppointments = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.addAbsence = async (req, res) => {
+  const { date } = req.body;
+  const doctorId = req.user.id;
+
+  try {
+    const schedule = await Schedule.findOne({ where: { doctorId: doctorId } });
+
+    if (!schedule) {
+      return res.status(404).json({ message: 'Schedule not found' });
+    }
+
+    const appointments = await Appointment.findAll({
+      where: { scheduleId: schedule.id, date: date }
+    });
+
+    if (appointments.length === 0) {
+      return res.status(404).json({ message: 'No appointments found for the given date' });
+    }
+
+    await Promise.all(appointments.map(async (appointment) => {
+      appointment.status = 'cancelled';
+      await appointment.save();
+    }));
+
+    res.status(200).json({ message: 'Appointments marked as cancelled', appointments });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

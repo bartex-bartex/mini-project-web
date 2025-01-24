@@ -29,7 +29,7 @@ function ManageSchedule() {
 
   const handleAddAbsence = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:3001/api/absences', {
+    const response = await fetch('http://localhost:3001/api/schedule/absence', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
